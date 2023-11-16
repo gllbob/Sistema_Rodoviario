@@ -28,14 +28,12 @@ public class PassagemDAO implements PassagemDAOListener {
 
     @Override
     public void cadastrarPassagem(Passagem passagem) throws SQLException {
-        String sql = "CALL cadastrarpassagem(?, ?, '?', ?, '?', '?', ?)";
+        String sql = "CALL cadastrarpassagem(?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
-            
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String dataSaidaFormatted = dateFormat.format(passagem.getDatasaida());
-        
+
             System.out.println("Passagem.getCidadeorigem().getIdCidade(): " + passagem.getCidadeorigem().getIdCidade());
             System.out.println("Passagem.getCidadedestino().getIdCidade(): " + passagem.getCidadedestino().getIdCidade());
             System.out.println("Passagem.getVeiculo().getPlaca(): " + passagem.getVeiculo().getPlaca());
@@ -43,7 +41,7 @@ public class PassagemDAO implements PassagemDAOListener {
             System.out.println("Passagem.getDatasaida(): " + dataSaidaFormatted);
             System.out.println("Passagem.getHorasaida(): " + passagem.getHorasaida());
             System.out.println("Passagem.getValorpassagem(): " + passagem.getValorpassagem());
-            
+
             preparedStatement.setLong(1, passagem.getCidadeorigem().getIdCidade());
             preparedStatement.setLong(2, passagem.getCidadedestino().getIdCidade());
             preparedStatement.setString(3, passagem.getVeiculo().getPlaca()); 
@@ -54,7 +52,7 @@ public class PassagemDAO implements PassagemDAOListener {
 
             preparedStatement.executeUpdate();
         }
-    } 
+    }
     
     @Override
     public Passagem obterPassagemPorId(Integer idPassagem) throws SQLException {
