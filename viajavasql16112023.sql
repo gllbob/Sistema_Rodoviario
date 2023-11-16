@@ -48,9 +48,13 @@ CREATE TABLE IF NOT EXISTS `passagem` (
   CONSTRAINT `FK_passagem_cidade` FOREIGN KEY (`idecidadeorigem`) REFERENCES `cidade` (`idecidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_passagem_cidade_2` FOREIGN KEY (`idecidadedestino`) REFERENCES `cidade` (`idecidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_passagem_veiculo` FOREIGN KEY (`ideveiculo`) REFERENCES `veiculo` (`ideveiculo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela viajava.passagem: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela viajava.passagem: ~2 rows (aproximadamente)
+INSERT INTO `passagem` (`idepassagem`, `idecidadeorigem`, `idecidadedestino`, `ideveiculo`, `nropoltrona`, `dtcsaida`, `deshorasaida`, `nrovalorpassagem`) VALUES
+	(1, 2927408, 2927408, 1, 1, '2023-11-14', '10:00', 50.00),
+	(2, 2927408, 2927408, 1, 1, '2023-11-14', '10:00', 50.00),
+	(7, 2927408, 2927408, 1, 1, '2023-11-15', '10:10', 50.00);
 
 -- Copiando estrutura para tabela viajava.usuario
 CREATE TABLE IF NOT EXISTS `usuario` (
@@ -75,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `veiculo` (
   `nropoltronas` int(11) DEFAULT NULL,
   `numero` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ideveiculo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela viajava.veiculo: ~3 rows (aproximadamente)
 INSERT INTO `veiculo` (`ideveiculo`, `desplaca`, `nommotorista`, `desmodelo`, `nroanomodelo`, `nropoltronas`, `numero`) VALUES
@@ -102,28 +106,37 @@ DELIMITER ;
 -- Copiando estrutura para procedure viajava.cadastrarpassagem
 DELIMITER //
 CREATE PROCEDURE `cadastrarpassagem`(
-    IN pidecidadeorigem BIGINT,
-    IN pidecidadedestino BIGINT,
-    IN pideveiculo VARCHAR(20),
-    IN pnropoltrona INT,
-    IN pdtcsaida DATE,
-    IN pdeshorasaida VARCHAR(10),
-    IN pnrovalorpassagem DECIMAL(10, 2)
+	IN `pidecidadeorigem` BIGINT,
+	IN `pidecidadedestino` BIGINT,
+	IN `pideveiculo` VARCHAR(20),
+	IN `pnropoltrona` INT,
+	IN `pdtcsaida` DATE,
+	IN `pdeshorasaida` VARCHAR(10),
+	IN `pnrovalorpassagem` DECIMAL(10, 2)
 )
 BEGIN
-    INSERT INTO passagem (idecidadeorigem, 
-	 							  idecidadedestino, 
-								  ideveiculo, 
-								  nropoltrona, 
-								  dtcsaida, 
-								  deshorasaida, 
-								  nrovalorpassagem) VALUES (pidecidadeorigem, 
-								  									 pidecidadedestino, 
-																	 pideveiculo, 
-																	 pnropoltrona, 
-																	 pdtcsaida, 
-																	 pdeshorasaida, 
-																	 pnrovalorpassagem);
+	DECLARE videveiculo BIGINT;
+	
+	SELECT ideveiculo INTO videveiculo
+	FROM veiculo
+	WHERE desplaca = pideveiculo;
+	
+	SET @pdtcsaida = STR_TO_DATE('15/11/2023', '%d/%m/%Y');
+	SELECT @pdtcsaida;
+	
+ 	INSERT INTO passagem (idecidadeorigem, 
+ 							  idecidadedestino, 
+							  ideveiculo, 
+							  nropoltrona, 
+							  dtcsaida, 
+							  deshorasaida, 
+							  nrovalorpassagem) VALUES (pidecidadeorigem, 
+							  									 pidecidadedestino, 
+																 videveiculo, 
+																 pnropoltrona, 
+																 @pdtcsaida, 
+																 pdeshorasaida, 
+																 pnrovalorpassagem);
 END//
 DELIMITER ;
 
