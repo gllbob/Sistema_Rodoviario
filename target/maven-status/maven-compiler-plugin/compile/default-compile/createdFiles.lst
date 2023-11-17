@@ -39,6 +39,7 @@ modal\views\VeiculoViews$3.class
 modal\dao\Usuariodao.class
 modal\views\VeiculoViews$5.class
 modal\views\Menu$1.class
+modal\views\ListaPassagem$1.class
 modal\views\PassagemViews$7.class
 modal\views\VeiculoViews.class
 modal\views\CidadeViews$2.class

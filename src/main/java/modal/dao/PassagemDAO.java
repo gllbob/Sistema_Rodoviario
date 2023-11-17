@@ -28,19 +28,11 @@ public class PassagemDAO implements PassagemDAOListener {
 
     @Override
     public void cadastrarPassagem(Passagem passagem) throws SQLException {
-        String sql = "CALL cadastrarpassagem(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "CALL cadastrarpassagem(?, ?, ?, ?, ?, ?, ?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String dataSaidaFormatted = dateFormat.format(passagem.getDatasaida());
-
-            System.out.println("Passagem.getCidadeorigem().getIdCidade(): " + passagem.getCidadeorigem().getIdCidade());
-            System.out.println("Passagem.getCidadedestino().getIdCidade(): " + passagem.getCidadedestino().getIdCidade());
-            System.out.println("Passagem.getVeiculo().getPlaca(): " + passagem.getVeiculo().getPlaca());
-            System.out.println("Passagem.getPoltrona(): " + passagem.getPoltrona());
-            System.out.println("Passagem.getDatasaida(): " + dataSaidaFormatted);
-            System.out.println("Passagem.getHorasaida(): " + passagem.getHorasaida());
-            System.out.println("Passagem.getValorpassagem(): " + passagem.getValorpassagem());
 
             preparedStatement.setLong(1, passagem.getCidadeorigem().getIdCidade());
             preparedStatement.setLong(2, passagem.getCidadedestino().getIdCidade());
@@ -56,44 +48,63 @@ public class PassagemDAO implements PassagemDAOListener {
     
     @Override
     public Passagem obterPassagemPorId(Integer idPassagem) throws SQLException {
-        String sql = "SELECT * FROM passagem WHERE idpassagem = ?";
+        String sql = "CALL consultarpassagem(?)";
+        
+        try {
+            connection = Conexao.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, idPassagem);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int idpassagem = resultSet.getInt("idepassagem");
+                        int poltrona = resultSet.getInt("nropoltrona");
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, idPassagem);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    int idpassagem = resultSet.getInt("idpassagem");
-                    int poltrona = resultSet.getInt("poltrona");
-                    Date datasaida = resultSet.getDate("datasaida");
-                    String horasaida = resultSet.getString("horasaida");
-                    int cidadeOrigemId = resultSet.getInt("cidadeorigem_id");
-                    Cidade cidadeOrigem = consultarCidade(cidadeOrigemId);
+                        // Obtendo a data de saída como java.sql.Date
+                        java.sql.Date sqlDataSaida = resultSet.getDate("dtcsaida");
 
-                    int cidadeDestinoId = resultSet.getInt("cidadedestino_id");
-                    Cidade cidadeDestino = consultarCidade(cidadeDestinoId);
+                        // Convertendo java.sql.Date para java.util.Date
+                        Date datasaida = new Date(sqlDataSaida.getTime());
 
-                    double valorpassagem = resultSet.getDouble("valorpassagem");
-                    String desplaca = resultSet.getString("placa");
-                    Veiculo placa = consultarVeiculo(desplaca);
+                        // Formatando a data para o padrão brasileiro
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        String dataSaidaFormatted = dateFormat.format(datasaida);
 
+                        String horasaida = resultSet.getString("deshorasaida");
+                        int cidadeOrigemId = resultSet.getInt("idecidadeorigem");
+                        Cidade cidadeOrigem = consultarCidade(cidadeOrigemId);
 
-                    return new Passagem(idpassagem, poltrona, datasaida, horasaida, cidadeOrigem, cidadeDestino, valorpassagem, placa);
+                        int cidadeDestinoId = resultSet.getInt("idecidadedestino");
+                        Cidade cidadeDestino = consultarCidade(cidadeDestinoId);
+
+                        double valorpassagem = resultSet.getDouble("nrovalorpassagem");
+                        String desplaca = resultSet.getString("desplaca");
+                        Veiculo placa = consultarVeiculo(desplaca);
+
+                        return new Passagem(idpassagem, poltrona, datasaida, horasaida, cidadeOrigem, cidadeDestino, valorpassagem, placa);
+                    }
                 }
             }
+        } catch (Exception ex) {
+            Logger.getLogger(PassagemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null; // Retorna null se a passagem não for encontrada.
     }
+
     
     @Override
     public List<Passagem> listarTodasPassagens() throws SQLException {
         List<Passagem> passagems = new ArrayList<>();
         try {
             connection = Conexao.getConnection();
-            pst = connection.prepareStatement("SELECT idepassagem, idecidadeorigem, idecidadedestino, ideveiculo, nropoltrona, dtcsaida, deshorasaida, nrovalorpassagem FROM passagem");
+            pst = connection.prepareStatement("SELECT p.idepassagem, p.idecidadeorigem, c.nomcidade AS cidadeorigem, p.idecidadedestino, c2.nomcidade AS cidadedestino, p.ideveiculo, v.desplaca, p.nropoltrona, p.dtcsaida, p.deshorasaida, p.nrovalorpassagem FROM passagem p, cidade c, cidade c2, veiculo v WHERE c.idecidade = p.idecidadeorigem AND v.ideveiculo = p.ideveiculo AND c2.idecidade = p.idecidadedestino;");
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Passagem passagem = new Passagem();
                 passagem.setIdpassagem(rs.getInt("idepassagem"));
+                passagem.setDatasaida(rs.getDate("dtcsaida"));
+                passagem.setHorasaida(rs.getString("deshorasaida"));
+                passagem.setPoltrona(rs.getInt("nropoltrona"));
+                passagem.setValorpassagem(rs.getDouble("nrovalorpassagem"));
                 
                 int cidadeOrigemId = rs.getInt("idecidadeorigem");
                 Cidade cidadeOrigem = consultarCidade(cidadeOrigemId);
@@ -102,6 +113,10 @@ public class PassagemDAO implements PassagemDAOListener {
                 int cidadeDestinoId = rs.getInt("idecidadedestino");
                 Cidade cidadeDestino = consultarCidade(cidadeDestinoId);
                 passagem.setCidadedestino(cidadeDestino);
+                
+                String desplaca = rs.getString("desplaca");
+                Veiculo veiculo = consultarVeiculo(desplaca);
+                passagem.setVeiculo(veiculo);
                 
                 passagems.add(passagem);
             }
@@ -114,15 +129,15 @@ public class PassagemDAO implements PassagemDAOListener {
     }
 
     private Cidade consultarCidade(Integer cidadeId) throws SQLException {
-        String sql = "SELECT * FROM cidade WHERE idCidade = ?";
+        String sql = "SELECT idecidade, nomcidade, desuf FROM cidade WHERE idecidade = ?;";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, cidadeId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    Integer idCidade = resultSet.getInt("idCidade");
-                    String nomeCidade = resultSet.getString("nomeCidade");
-                    String uf = resultSet.getString("uf");
+                    Integer idCidade = resultSet.getInt("idecidade");
+                    String nomeCidade = resultSet.getString("nomcidade");
+                    String uf = resultSet.getString("desuf");
                     return new Cidade(idCidade, nomeCidade, uf);
                 }
             }
@@ -149,7 +164,7 @@ public class PassagemDAO implements PassagemDAOListener {
 
     @Override
     public void excluirPassagem(Integer idPassagem) throws SQLException {
-        String sql = "DELETE FROM passagem WHERE idpassagem = ?";
+        String sql = "CALL excluirpassagem(?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, idPassagem);

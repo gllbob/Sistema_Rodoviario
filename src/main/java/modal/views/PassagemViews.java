@@ -372,8 +372,12 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                 passagemdao.cadastrarPassagem(passagem);
 
                 tfidepassagem.setText("");
-                //tfnompassagem.setText("");
-                //tfdesuf.setText("");
+                tfvalpassagem.setText("");
+                tfpesqpassagem.setText("");
+                tfnropoltrona.setText("");
+                tfhorasaida.setText("");
+                tfdtcsaida.setText("");
+                        
             }
         } catch (SQLException e) {
         } catch (Exception ex) {
@@ -382,7 +386,6 @@ public class PassagemViews extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnsalvarcidadeActionPerformed
 
     private void btnexcluircidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluircidadeActionPerformed
-        /*
         // TODO add your handling code here:
         try {
             if (tfpesqpassagem.getText().isEmpty()) {
@@ -393,22 +396,24 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                 Passagem passagem = new Passagem();
                 PassagemDAO passagemdao = new PassagemDAO();
                 if (opcao == JOptionPane.YES_OPTION) {
-                    passagem = passagemdao.obterPassagemPorId(Long.valueOf(tfpesqpassagem.getText()));
+                    passagem = passagemdao.obterPassagemPorId(Integer.valueOf(tfpesqpassagem.getText()));
 
-                    passagemdao.excluirPassagem(passagem.getIdPassagem());
+                    passagemdao.excluirPassagem(passagem.getIdpassagem());
 
-                    btnexcluirpassagem.setEnabled(false);
-                    btnsalvarpassagem.setEnabled(true);
+                    btnexcluircidade.setEnabled(false);
+                    btnsalvarcidade.setEnabled(true);
+                    
+                    tfidepassagem.setText("");
+                    tfvalpassagem.setText("");
+                    tfpesqpassagem.setText("");
+                    tfnropoltrona.setText("");
+                    tfhorasaida.setText("");
+                    tfdtcsaida.setText("");
                 }
-
-                tfidepassagem.setText("");
-                tfnompassagem.setText("");
-                tfdesuf.setText("");
-                tfpesqpassagem.setText("");
             }
 
         } catch (SQLException e) {
-        }*/
+        }
     }//GEN-LAST:event_btnexcluircidadeActionPerformed
 
     private void btnlistacidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlistacidadeActionPerformed
@@ -425,33 +430,40 @@ public class PassagemViews extends javax.swing.JInternalFrame {
 
     private void btnpesqpassagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpesqpassagemActionPerformed
         // TODO add your handling code here:
-        /*
         try {
             if (tfpesqpassagem.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "O campo de pesquisa deve ser preenchido", "Erro", JOptionPane.ERROR_MESSAGE);
             } else {
-                Passagem passagem = new Passagem();
                 PassagemDAO passagemdao = new PassagemDAO();
+                
+                int idPassagem = Integer.valueOf(tfpesqpassagem.getText());
+                Passagem passagem = passagemdao.obterPassagemPorId(idPassagem);
 
-                passagem = passagemdao.obterPassagemPorId(Long.valueOf(tfpesqpassagem.getText()));
+                tfidepassagem.setText(passagem.getIdpassagem().toString());
+                tfvalpassagem.setText(passagem.getValorpassagem().toString());
+                tfnropoltrona.setText(passagem.getPoltrona().toString());
+                tfhorasaida.setText(passagem.getHorasaida());
+                
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                tfdtcsaida.setText(dateFormat.format(passagem.getDatasaida()));
 
-                tfidepassagem.setText(passagem.getIdPassagem().toString());
-                tfnompassagem.setText(passagem.getNomePassagem());
-                tfdesuf.setText(passagem.getUf());
-
-                btnsalvarpassagem.setEnabled(false);
-                btnexcluirpassagem.setEnabled(true);
+                btnsalvarcidade.setEnabled(false);
+                btnexcluircidade.setEnabled(true);
             }
 
         } catch (SQLException e) {
+            tfpesqpassagem.setText("");
         }
-        */
     }//GEN-LAST:event_btnpesqpassagemActionPerformed
 
     private void btnlimparcidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimparcidadeActionPerformed
         // TODO add your handling code here:
         tfidepassagem.setText("");
         tfpesqpassagem.setText("");
+        tfvalpassagem.setText("");
+        tfnropoltrona.setText("");
+        tfhorasaida.setText("");
+        tfdtcsaida.setText("");
     }//GEN-LAST:event_btnlimparcidadeActionPerformed
 
     private void tfhorasaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfhorasaidaActionPerformed
