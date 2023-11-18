@@ -339,6 +339,7 @@ public class VeiculoViews extends javax.swing.JInternalFrame {
         menu.btnveiculo.setVisible(true);
         menu.btnusuario.setVisible(true);
         menu.btnpassagem.setVisible(true);
+        menu.btnfaturamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnvoltarcidadeActionPerformed
 

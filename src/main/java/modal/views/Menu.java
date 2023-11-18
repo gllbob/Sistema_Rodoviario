@@ -31,6 +31,7 @@ public class Menu extends javax.swing.JFrame {
         btncidade = new javax.swing.JButton();
         btnpassagem = new javax.swing.JButton();
         btnveiculo = new javax.swing.JButton();
+        btnfaturamento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,10 +58,18 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnfaturamento.setText("Faturamento");
+        btnfaturamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnfaturamentoActionPerformed(evt);
+            }
+        });
+
         dpmenu.setLayer(btnusuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dpmenu.setLayer(btncidade, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dpmenu.setLayer(btnpassagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dpmenu.setLayer(btnveiculo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dpmenu.setLayer(btnfaturamento, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dpmenuLayout = new javax.swing.GroupLayout(dpmenu);
         dpmenu.setLayout(dpmenuLayout);
@@ -74,6 +83,10 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btncidade, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(110, 110, 110))
+            .addGroup(dpmenuLayout.createSequentialGroup()
+                .addGap(312, 312, 312)
+                .addComponent(btnfaturamento, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(dpmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(dpmenuLayout.createSequentialGroup()
                     .addGap(89, 89, 89)
@@ -87,7 +100,9 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(dpmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnpassagem, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addComponent(btnfaturamento, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(btncidade, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))
             .addGroup(dpmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,6 +134,7 @@ public class Menu extends javax.swing.JFrame {
         VeiculoViews veiculoviews = new VeiculoViews();
         veiculoviews.setVisible(true);
         dpmenu.add(veiculoviews);
+        btnfaturamento.setVisible(false);
         btncidade.setVisible(false);
         btnveiculo.setVisible(false);
         btnusuario.setVisible(false);
@@ -130,6 +146,7 @@ public class Menu extends javax.swing.JFrame {
         CidadeViews cidadeviews = new CidadeViews();
         cidadeviews.setVisible(true);
         dpmenu.add(cidadeviews);
+        btnfaturamento.setVisible(false);
         btncidade.setVisible(false);
         btnveiculo.setVisible(false);
         btnusuario.setVisible(false);
@@ -141,11 +158,24 @@ public class Menu extends javax.swing.JFrame {
         PassagemViews passagemviews = new PassagemViews();
         passagemviews.setVisible(true);
         dpmenu.add(passagemviews);
+        btnfaturamento.setVisible(false);
         btncidade.setVisible(false);
         btnveiculo.setVisible(false);
         btnusuario.setVisible(false);
         btnpassagem.setVisible(false);
     }//GEN-LAST:event_btnpassagemActionPerformed
+
+    private void btnfaturamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfaturamentoActionPerformed
+        // TODO add your handling code here:
+        Faturamento faturamento = new Faturamento();
+        faturamento.setVisible(true);
+        dpmenu.add(faturamento);
+        btnfaturamento.setVisible(false);
+        btncidade.setVisible(false);
+        btnveiculo.setVisible(false);
+        btnusuario.setVisible(false);
+        btnpassagem.setVisible(false);
+    }//GEN-LAST:event_btnfaturamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +214,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btncidade;
+    public javax.swing.JButton btnfaturamento;
     public javax.swing.JButton btnpassagem;
     public javax.swing.JButton btnusuario;
     public javax.swing.JButton btnveiculo;

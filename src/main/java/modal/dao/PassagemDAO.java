@@ -196,4 +196,43 @@ public class PassagemDAO implements PassagemDAOListener {
 
         return false;
     }
+    
+    public List<Passagem> faturamento(Date dtcinicio, Date dtcfinal) throws SQLException {
+        List<Passagem> passagems = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            connection = Conexao.getConnection();
+            pst = connection.prepareStatement("CALL spdesfaturamento(?,?);");
+            pst.setString(1, format.format(dtcinicio));
+            pst.setString(2, format.format(dtcfinal));
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Passagem passagem = new Passagem();
+                passagem.setIdpassagem(rs.getInt("idepassagem"));
+                passagem.setDatasaida(rs.getDate("dtcsaida"));
+                passagem.setHorasaida(rs.getString("deshorasaida"));
+                passagem.setPoltrona(rs.getInt("nropoltrona"));
+                passagem.setValorpassagem(rs.getDouble("nrovalorpassagem"));
+                
+                int cidadeOrigemId = rs.getInt("idecidadeorigem");
+                Cidade cidadeOrigem = consultarCidade(cidadeOrigemId);
+                passagem.setCidadeorigem(cidadeOrigem);
+                
+                int cidadeDestinoId = rs.getInt("idecidadedestino");
+                Cidade cidadeDestino = consultarCidade(cidadeDestinoId);
+                passagem.setCidadedestino(cidadeDestino);
+                
+                String desplaca = rs.getString("desplaca");
+                Veiculo veiculo = consultarVeiculo(desplaca);
+                passagem.setVeiculo(veiculo);
+                
+                passagems.add(passagem);
+            }
+        } catch (SQLException e) {
+            throw e;
+        } catch (Exception ex) {
+            Logger.getLogger(PassagemDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return passagems;
+    }
 }

@@ -5,9 +5,11 @@ import conectabd.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import domain.Usuario;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modal.views.Menu;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -23,8 +25,35 @@ public class Usuariodao {
     PreparedStatement pst;
 
     public Usuariodao() {
+        try {
+            this.con = Conexao.getConnection();
+        } catch (Exception ex) {
+            Logger.getLogger(Usuariodao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+    public void login(String login, String senha) throws SQLException {
+        try {
+            System.out.println("teste1" + login);
+            System.out.println("teste2" + senha);
+            pst = con.prepareStatement("call spdeslogin(?,?);");
+            pst.setString(1, login);
+            pst.setString(2, senha);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                Menu menu = new Menu();
+                menu.setVisible(true);
+            } else {
+                // Handle unsuccessful login
+            }
+        } catch (SQLException e) {
+            // Handle the SQLException
+            e.printStackTrace();  // You might want to log the exception or handle it appropriately
+            throw e;  // Re-throw the exception if necessary
+        }
+    }
+
+
     
     public void cadastro(Usuario obj){
         try { con = Conexao.getConnection();
