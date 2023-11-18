@@ -113,6 +113,7 @@ public class PassagemViews extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         tfvalpassagem = new javax.swing.JFormattedTextField();
         cbdesplaca = new javax.swing.JComboBox<>();
+        btnvoltarcidade = new javax.swing.JButton();
 
         jLabel1.setText("ID Passagem");
 
@@ -192,6 +193,13 @@ public class PassagemViews extends javax.swing.JInternalFrame {
 
         cbdesplaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnvoltarcidade.setText("Voltar");
+        btnvoltarcidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvoltarcidadeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,13 +265,17 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(3, 3, 3)
                                         .addComponent(jLabel4))
-                                    .addComponent(cbidecidadedestino, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(cbidecidadedestino, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnvoltarcidade)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addComponent(btnvoltarcidade)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnpesqpassagem)
@@ -338,8 +350,7 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                 VeiculoDAO veiculodao = new VeiculoDAO();
                 
                 String placaVeiculo = (String) cbdesplaca.getSelectedItem();
-
-                // Convert the selected items to integers if necessary
+                
                 int idCidadeOrigem = id.get(cbidecidadeorigem.getSelectedIndex());
                 int idCidadeDestino = id2.get(cbidecidadedestino.getSelectedIndex());
 
@@ -350,8 +361,14 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                 passagem.setCidadeorigem(cidadeOrigem);
                 passagem.setCidadedestino(cidadeDestino);
                 passagem.setVeiculo(veiculo);
-                
-                passagem.setPoltrona(Integer.valueOf(tfnropoltrona.getText()));
+                Integer totalPoltronasVeiculo = veiculo.getQtdpoltronas();
+
+                Integer poltrona = Integer.valueOf(tfnropoltrona.getText());
+                if (poltrona <= totalPoltronasVeiculo) {
+                    passagem.setPoltrona(poltrona);
+                }else {
+                    JOptionPane.showMessageDialog(null, "Número de poltrona inválido. O veículo possui apenas " + totalPoltronasVeiculo + " poltronas.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
                 String dataSaidaText = tfdtcsaida.getText().trim();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date dataSaida = dateFormat.parse(dataSaidaText);
@@ -359,7 +376,7 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                 passagem.setHorasaida(tfhorasaida.getText());
                 
                 String valPassagemText = tfvalpassagem.getText().trim();
-                valPassagemText = valPassagemText.replace(",", "."); // Replace comma with dot
+                valPassagemText = valPassagemText.replace(",", ".");
                 try {
                     if (!valPassagemText.isEmpty()) {
                         passagem.setValorpassagem(Double.valueOf(valPassagemText));
@@ -369,15 +386,21 @@ public class PassagemViews extends javax.swing.JInternalFrame {
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Invalid format for passagem value", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                passagemdao.cadastrarPassagem(passagem);
+                
+                boolean seatAlreadySold = passagemdao.verificarPoltronaVendida(passagem);
 
-                tfidepassagem.setText("");
-                tfvalpassagem.setText("");
-                tfpesqpassagem.setText("");
-                tfnropoltrona.setText("");
-                tfhorasaida.setText("");
-                tfdtcsaida.setText("");
-                        
+                if (seatAlreadySold) {
+                    JOptionPane.showMessageDialog(null, "Poltrona já vendida. Escolha outra poltrona.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    passagemdao.cadastrarPassagem(passagem);
+
+                    tfidepassagem.setText("");
+                    tfvalpassagem.setText("");
+                    tfpesqpassagem.setText("");
+                    tfnropoltrona.setText("");
+                    tfhorasaida.setText("");
+                    tfdtcsaida.setText("");  
+                }    
             }
         } catch (SQLException e) {
         } catch (Exception ex) {
@@ -464,6 +487,8 @@ public class PassagemViews extends javax.swing.JInternalFrame {
         tfnropoltrona.setText("");
         tfhorasaida.setText("");
         tfdtcsaida.setText("");
+        btnsalvarcidade.setEnabled(true);
+        btnexcluircidade.setEnabled(false);
     }//GEN-LAST:event_btnlimparcidadeActionPerformed
 
     private void tfhorasaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfhorasaidaActionPerformed
@@ -474,6 +499,16 @@ public class PassagemViews extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfvalpassagemActionPerformed
 
+    private void btnvoltarcidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvoltarcidadeActionPerformed
+        // TODO add your handling code here:
+        Menu menu = (Menu) SwingUtilities.getWindowAncestor(this);
+        menu.btncidade.setVisible(true);
+        menu.btnveiculo.setVisible(true);
+        menu.btnusuario.setVisible(true);
+        menu.btnpassagem.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnvoltarcidadeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnexcluircidade;
@@ -481,6 +516,7 @@ public class PassagemViews extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnlistacidade;
     private javax.swing.JButton btnpesqpassagem;
     private javax.swing.JButton btnsalvarcidade;
+    private javax.swing.JButton btnvoltarcidade;
     private javax.swing.JComboBox<String> cbdesplaca;
     private javax.swing.JComboBox<String> cbidecidadedestino;
     private javax.swing.JComboBox<String> cbidecidadeorigem;

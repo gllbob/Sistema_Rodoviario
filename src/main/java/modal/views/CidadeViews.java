@@ -45,6 +45,7 @@ public class CidadeViews extends javax.swing.JInternalFrame {
         btnpesqcidade = new javax.swing.JButton();
         tfidecidade = new javax.swing.JTextField();
         btnlimparcidade = new javax.swing.JButton();
+        btnvoltarcidade = new javax.swing.JButton();
 
         jLabel1.setText("ID Cidade");
 
@@ -97,6 +98,13 @@ public class CidadeViews extends javax.swing.JInternalFrame {
             }
         });
 
+        btnvoltarcidade.setText("Voltar");
+        btnvoltarcidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvoltarcidadeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,11 +147,17 @@ public class CidadeViews extends javax.swing.JInternalFrame {
                             .addComponent(tfdesuf, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 261, Short.MAX_VALUE)))
                 .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnvoltarcidade)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addContainerGap()
+                .addComponent(btnvoltarcidade)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -264,11 +278,23 @@ public class CidadeViews extends javax.swing.JInternalFrame {
         tfnomcidade.setText("");
         tfdesuf.setText("");
         tfpesqcidade.setText("");
+        btnsalvarcidade.setEnabled(true);
+        btnexcluircidade.setEnabled(false);
     }//GEN-LAST:event_btnlimparcidadeActionPerformed
 
     private void tfnomcidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfnomcidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfnomcidadeActionPerformed
+
+    private void btnvoltarcidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvoltarcidadeActionPerformed
+        // TODO add your handling code here:
+        Menu menu = (Menu) SwingUtilities.getWindowAncestor(this);
+        menu.btncidade.setVisible(true);
+        menu.btnveiculo.setVisible(true);
+        menu.btnusuario.setVisible(true);
+        menu.btnpassagem.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnvoltarcidadeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -277,6 +303,7 @@ public class CidadeViews extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnlistacidade;
     private javax.swing.JButton btnpesqcidade;
     private javax.swing.JButton btnsalvarcidade;
+    private javax.swing.JButton btnvoltarcidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -171,4 +171,29 @@ public class PassagemDAO implements PassagemDAOListener {
             preparedStatement.executeUpdate();
         }
     }
+    
+    public boolean verificarPoltronaVendida(Passagem passagem) throws SQLException {
+        String sql = "CALL spstspassagem(?,?,?);";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            System.out.println(new java.sql.Date(passagem.getDatasaida().getTime()));
+            
+            statement.setString(1, passagem.getVeiculo().getPlaca());
+            statement.setInt(2, passagem.getPoltrona());
+            statement.setDate(3, new java.sql.Date(passagem.getDatasaida().getTime()));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt("nro");
+                    System.out.println("Count: " + count);
+                    return count > 0; 
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+
+        return false;
+    }
 }
