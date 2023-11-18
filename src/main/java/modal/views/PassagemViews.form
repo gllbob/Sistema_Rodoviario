@@ -245,6 +245,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfidepassagem">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnlimparcidade">
       <Properties>

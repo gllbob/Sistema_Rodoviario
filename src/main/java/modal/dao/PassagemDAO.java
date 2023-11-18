@@ -58,14 +58,8 @@ public class PassagemDAO implements PassagemDAOListener {
                     if (resultSet.next()) {
                         int idpassagem = resultSet.getInt("idepassagem");
                         int poltrona = resultSet.getInt("nropoltrona");
-
-                        // Obtendo a data de saída como java.sql.Date
                         java.sql.Date sqlDataSaida = resultSet.getDate("dtcsaida");
-
-                        // Convertendo java.sql.Date para java.util.Date
                         Date datasaida = new Date(sqlDataSaida.getTime());
-
-                        // Formatando a data para o padrão brasileiro
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String dataSaidaFormatted = dateFormat.format(datasaida);
 
@@ -87,7 +81,7 @@ public class PassagemDAO implements PassagemDAOListener {
         } catch (Exception ex) {
             Logger.getLogger(PassagemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null; // Retorna null se a passagem não for encontrada.
+        return null;
     }
 
     
@@ -96,7 +90,7 @@ public class PassagemDAO implements PassagemDAOListener {
         List<Passagem> passagems = new ArrayList<>();
         try {
             connection = Conexao.getConnection();
-            pst = connection.prepareStatement("SELECT p.idepassagem, p.idecidadeorigem, c.nomcidade AS cidadeorigem, p.idecidadedestino, c2.nomcidade AS cidadedestino, p.ideveiculo, v.desplaca, p.nropoltrona, p.dtcsaida, p.deshorasaida, p.nrovalorpassagem FROM passagem p, cidade c, cidade c2, veiculo v WHERE c.idecidade = p.idecidadeorigem AND v.ideveiculo = p.ideveiculo AND c2.idecidade = p.idecidadedestino;");
+            pst = connection.prepareStatement("SELECT p.idepassagem, p.idecidadeorigem, c.nomcidade AS cidadeorigem, p.idecidadedestino, c2.nomcidade AS cidadedestino, p.ideveiculo, v.desplaca, p.nropoltrona, p.dtcsaida, p.deshorasaida, p.nrovalorpassagem FROM passagem p, cidade c, cidade c2, veiculo v WHERE c.idecidade = p.idecidadeorigem AND v.ideveiculo = p.ideveiculo AND c2.idecidade = p.idecidadedestino order by p.idepassagem desc;");
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Passagem passagem = new Passagem();
@@ -142,7 +136,7 @@ public class PassagemDAO implements PassagemDAOListener {
                 }
             }
         }
-        return null; // Retorna null se a cidade não for encontrada.
+        return null;
     }
     
     private Veiculo consultarVeiculo(String placa) throws SQLException {
@@ -157,7 +151,7 @@ public class PassagemDAO implements PassagemDAOListener {
                 }
             }
         }
-        return null; // Retorna null se a cidade não for encontrada.
+        return null;
     }
 
     
@@ -176,8 +170,6 @@ public class PassagemDAO implements PassagemDAOListener {
         String sql = "CALL spstspassagem(?,?,?);";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            
-            System.out.println(new java.sql.Date(passagem.getDatasaida().getTime()));
             
             statement.setString(1, passagem.getVeiculo().getPlaca());
             statement.setInt(2, passagem.getPoltrona());

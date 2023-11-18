@@ -151,6 +151,8 @@ public class PassagemViews extends javax.swing.JInternalFrame {
             }
         });
 
+        tfidepassagem.setEnabled(false);
+
         btnlimparcidade.setText("Limpar");
         btnlimparcidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

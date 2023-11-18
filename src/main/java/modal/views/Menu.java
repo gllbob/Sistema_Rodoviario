@@ -36,6 +36,11 @@ public class Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnusuario.setText("Usuario");
+        btnusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnusuarioActionPerformed(evt);
+            }
+        });
 
         btncidade.setText("Cidade");
         btncidade.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +181,18 @@ public class Menu extends javax.swing.JFrame {
         btnusuario.setVisible(false);
         btnpassagem.setVisible(false);
     }//GEN-LAST:event_btnfaturamentoActionPerformed
+
+    private void btnusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnusuarioActionPerformed
+        // TODO add your handling code here:
+        UsuarioViews usurioviews = new UsuarioViews();
+        usurioviews.setVisible(true);
+        dpmenu.add(usurioviews);
+        btnfaturamento.setVisible(false);
+        btncidade.setVisible(false);
+        btnveiculo.setVisible(false);
+        btnusuario.setVisible(false);
+        btnpassagem.setVisible(false);
+    }//GEN-LAST:event_btnusuarioActionPerformed
 
     /**
      * @param args the command line arguments

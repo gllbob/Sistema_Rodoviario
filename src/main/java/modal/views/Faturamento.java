@@ -31,14 +31,12 @@ public class Faturamento extends javax.swing.JInternalFrame {
     
     public void ListagemPassagem() throws SQLException {
         try {
-            // Other code ...
             
             Double totfaturamento = 0.0;
             
             PassagemDAO passagemdao = new PassagemDAO();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            // Assuming tfdtcinicio and tfdtcfinal are JTextFields
             String dtcInicioText = tfdtcinicio.getText();
             String dtcFinalText = tfdtcfinal.getText();
 
@@ -73,16 +71,11 @@ public class Faturamento extends javax.swing.JInternalFrame {
 
             lbtotfaturamento.setText(totfaturamento.toString());
             tlistacidade.setModel(model);
-
-            // Rest of the code ...
         } catch (ParseException e) {
-            // Handle the parsing exception appropriately, e.g., show an error message
-            e.printStackTrace(); // You may want to log the exception as well
+            e.printStackTrace();
         } catch (SQLException e) {
-            // Handle SQL exception
-            e.printStackTrace(); // You may want to log the exception as well
+            e.printStackTrace();
         } catch (Exception ex) {
-            // Handle other exceptions
             Logger.getLogger(Faturamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

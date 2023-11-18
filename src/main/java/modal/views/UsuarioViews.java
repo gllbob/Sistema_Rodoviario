@@ -1,23 +1,24 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package modal.views;
 
 import domain.Usuario;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import modal.dao.Usuariodao;
 
 /**
  *
  * @author gllbo
  */
-public class Usuarioviews extends javax.swing.JFrame {
+public class UsuarioViews extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Usuarioviews
+     * Creates new form UsuarioViews2
      */
-    public Usuarioviews() {
+    public UsuarioViews() {
         initComponents();
     }
 
@@ -30,6 +31,11 @@ public class Usuarioviews extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        nomcargo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        deslogin = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         desemail = new javax.swing.JTextField();
@@ -38,13 +44,13 @@ public class Usuarioviews extends javax.swing.JFrame {
         btnsalvar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         nomusuario = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        nomcargo = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        deslogin = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        btnvoltarcidade = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel2.setText("Cargo");
+
+        jLabel3.setText("Login");
+
+        jLabel4.setText("Senha");
 
         jLabel6.setText("Email");
 
@@ -59,11 +65,12 @@ public class Usuarioviews extends javax.swing.JFrame {
 
         jLabel1.setText("Nome Completo");
 
-        jLabel2.setText("Cargo");
-
-        jLabel3.setText("Login");
-
-        jLabel4.setText("Senha");
+        btnvoltarcidade.setText("Voltar");
+        btnvoltarcidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvoltarcidadeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,13 +111,18 @@ public class Usuarioviews extends javax.swing.JFrame {
                                     .addComponent(jLabel5)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(215, 215, 215)
-                        .addComponent(btnsalvar)))
-                .addContainerGap(157, Short.MAX_VALUE))
+                        .addComponent(btnsalvar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(btnvoltarcidade)))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(191, 191, 191)
+                .addGap(16, 16, 16)
+                .addComponent(btnvoltarcidade)
+                .addGap(152, 152, 152)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -136,14 +148,14 @@ public class Usuarioviews extends javax.swing.JFrame {
                     .addComponent(descsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(btnsalvar)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsalvarsalvarusuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarsalvarusuario
-        Usuario usuario = new Usuario();        // TODO add your handling code here:
+        Usuario usuario = new Usuario(); 
         Usuariodao usuariodao = new Usuariodao();
         usuario.setNome(nomusuario.getText());
         usuario.setCargo(nomcargo.getText());
@@ -155,46 +167,30 @@ public class Usuarioviews extends javax.swing.JFrame {
         }
         usuario.setEmail(desemail.getText());
         usuariodao.cadastro(usuario);
-
+        
+        nomusuario.setText("");
+        nomcargo.setText("");
+        deslogin.setText("");
+        desemail.setText("");
+        descsenha.setText("");
+        dessenha.setText("");  
     }//GEN-LAST:event_btnsalvarsalvarusuario
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Usuarioviews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Usuarioviews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Usuarioviews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Usuarioviews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnvoltarcidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvoltarcidadeActionPerformed
+        // TODO add your handling code here:
+        Menu menu = (Menu) SwingUtilities.getWindowAncestor(this);
+        menu.btncidade.setVisible(true);
+        menu.btnveiculo.setVisible(true);
+        menu.btnusuario.setVisible(true);
+        menu.btnpassagem.setVisible(true);
+        menu.btnfaturamento.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnvoltarcidadeActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Usuarioviews().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnsalvar;
+    private javax.swing.JButton btnvoltarcidade;
     private javax.swing.JPasswordField descsenha;
     private javax.swing.JTextField desemail;
     private javax.swing.JTextField deslogin;

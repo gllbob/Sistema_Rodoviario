@@ -88,6 +88,7 @@ public class VeiculoDAO implements VeiculoDAOListener {
         return veiculo;
     }
 
+    @Override
     public List<Veiculo> listarTodosVeiculos() throws SQLException {
         List<Veiculo> veiculos = new ArrayList<>();
         try {
@@ -112,6 +113,7 @@ public class VeiculoDAO implements VeiculoDAOListener {
         return veiculos;
     }
 
+    @Override
     public void excluirVeiculoPorPlaca(String placa) throws SQLException {
         try {
             con = Conexao.getConnection(); 

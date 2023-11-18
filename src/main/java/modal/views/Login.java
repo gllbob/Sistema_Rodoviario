@@ -16,7 +16,7 @@ import modal.dao.Usuariodao;
 public class Login extends javax.swing.JFrame {
 
     /**
-     * Creates new form Login2
+     * Creates new form Login
      */
     public Login() {
         initComponents();
@@ -97,6 +97,7 @@ public class Login extends javax.swing.JFrame {
         String senha = new String(pfpass.getPassword());
         try {
             usuariodao.login(login, senha);
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }

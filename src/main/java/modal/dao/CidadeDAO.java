@@ -99,8 +99,8 @@ public class CidadeDAO implements CidadeDAOListener {
     public void excluirCidade(Integer idCidade) throws SQLException {
         try {
             con = Conexao.getConnection();
-            pst = con.prepareStatement("CALL excluircidade(?);");
-            pst.setLong(1, idCidade);
+            pst = con.prepareStatement("DELETE FROM cidade WHERE idecidade = ?;");
+            pst.setInt(1, idCidade);
             pst.executeUpdate();
         } catch (SQLException e) {
             throw e;

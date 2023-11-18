@@ -34,8 +34,6 @@ public class Usuariodao {
     
     public void login(String login, String senha) throws SQLException {
         try {
-            System.out.println("teste1" + login);
-            System.out.println("teste2" + senha);
             pst = con.prepareStatement("call spdeslogin(?,?);");
             pst.setString(1, login);
             pst.setString(2, senha);
@@ -44,12 +42,10 @@ public class Usuariodao {
                 Menu menu = new Menu();
                 menu.setVisible(true);
             } else {
-                // Handle unsuccessful login
             }
         } catch (SQLException e) {
-            // Handle the SQLException
-            e.printStackTrace();  // You might want to log the exception or handle it appropriately
-            throw e;  // Re-throw the exception if necessary
+            e.printStackTrace();
+            throw e;
         }
     }
 

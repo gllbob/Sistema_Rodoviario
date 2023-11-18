@@ -7,6 +7,7 @@ modal\dao\VeiculoDAOListener.class
 modal\views\VeiculoViews$6.class
 modal\views\Login$3.class
 modal\views\Menu$5.class
+modal\views\UsuarioViews$1.class
 modal\views\Faturamento.class
 modal\views\PassagemViews$3.class
 modal\views\CidadeViews$6.class
@@ -17,9 +18,11 @@ modal\views\Menu$3.class
 modal\views\PassagemViews$5.class
 modal\views\CidadeViews$3.class
 domain\Passagem.class
+modal\views\Menu$6.class
 modal\views\Menu.class
-modal\views\Usuarioviews$2.class
+modal\views\UsuarioViews$2.class
 modal\views\CidadeViews$7.class
+modal\views\UsuarioViews.class
 modal\views\VeiculoViews$3.class
 modal\dao\Usuariodao.class
 modal\views\PassagemViews$2.class
@@ -35,7 +38,6 @@ modal\views\PassagemViews$8.class
 domain\Veiculo.class
 modal\views\PassagemViews$4.class
 modal\dao\CidadeDAOListener.class
-modal\views\Usuarioviews$1.class
 domain\Usuario.class
 modal\views\CidadeViews$1.class
 modal\views\PassagemViews$1.class
@@ -48,7 +50,6 @@ modal\views\VeiculoViews$2.class
 modal\views\Login$2.class
 modal\views\PassagemViews.class
 modal\views\ListaCidade$1.class
-modal\views\Usuarioviews.class
 modal\views\Faturamento$2.class
 modal\views\VeiculoViews$5.class
 modal\views\Menu$1.class
