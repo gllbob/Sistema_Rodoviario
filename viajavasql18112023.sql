@@ -27,8 +27,9 @@ CREATE TABLE IF NOT EXISTS `cidade` (
   PRIMARY KEY (`idecidade`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela viajava.cidade: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela viajava.cidade: ~3 rows (aproximadamente)
 INSERT INTO `cidade` (`idecidade`, `nomcidade`, `desuf`) VALUES
+	(2910800, 'Feira de Santana', 'BA'),
 	(2927408, 'Salvador', 'BA');
 
 -- Copiando estrutura para tabela viajava.passagem
@@ -48,13 +49,40 @@ CREATE TABLE IF NOT EXISTS `passagem` (
   CONSTRAINT `FK_passagem_cidade` FOREIGN KEY (`idecidadeorigem`) REFERENCES `cidade` (`idecidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_passagem_cidade_2` FOREIGN KEY (`idecidadedestino`) REFERENCES `cidade` (`idecidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_passagem_veiculo` FOREIGN KEY (`ideveiculo`) REFERENCES `veiculo` (`ideveiculo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela viajava.passagem: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela viajava.passagem: ~29 rows (aproximadamente)
 INSERT INTO `passagem` (`idepassagem`, `idecidadeorigem`, `idecidadedestino`, `ideveiculo`, `nropoltrona`, `dtcsaida`, `deshorasaida`, `nrovalorpassagem`) VALUES
 	(1, 2927408, 2927408, 1, 1, '2023-11-14', '10:00', 50.00),
 	(2, 2927408, 2927408, 1, 1, '2023-11-14', '10:00', 50.00),
-	(7, 2927408, 2927408, 1, 1, '2023-11-15', '10:10', 50.00);
+	(7, 2927408, 2927408, 1, 1, '2023-11-15', '10:10', 50.00),
+	(11, 2927408, 2927408, 1, 1, '2023-11-16', '10:10', 50.00),
+	(12, 2927408, 2927408, 1, 2, '2023-11-16', '10:10', 50.00),
+	(15, 2927408, 2927408, 1, 2, '2023-11-16', '10:10', 50.00),
+	(16, 2927408, 2927408, 1, 1, '2023-11-16', '10:10', 50.00),
+	(17, 2927408, 2927408, 1, 5, '2023-11-16', '10:10', 50.00),
+	(18, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(19, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(20, 2927408, 2927408, 1, 35, '2023-11-17', '10:10', 50.00),
+	(21, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(22, 2927408, 2927408, 1, 36, '2023-10-17', '10:10', 50.00),
+	(23, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(24, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(25, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(26, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(27, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(28, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(29, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(30, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(31, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(32, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(33, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(34, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(35, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(36, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(37, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(38, 2927408, 2927408, 1, 36, '2023-11-17', '10:10', 50.00),
+	(40, 2927408, 2910800, 1, 1, '2023-11-18', '10:10', 50.00);
 
 -- Copiando estrutura para tabela viajava.usuario
 CREATE TABLE IF NOT EXISTS `usuario` (
@@ -65,9 +93,12 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `dessenha` varchar(255) DEFAULT NULL,
   `desemail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ideusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela viajava.usuario: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela viajava.usuario: ~1 rows (aproximadamente)
+INSERT INTO `usuario` (`ideusuario`, `nomusuario`, `nomcargo`, `deslogin`, `dessenha`, `desemail`) VALUES
+	(8, 'gllbob', 'adm', 'gllbob', '12345', 't@t'),
+	(10, 'Gabriel Lopes Lima', 'ADM', 'glbob', '12345', 't@t');
 
 -- Copiando estrutura para tabela viajava.veiculo
 CREATE TABLE IF NOT EXISTS `veiculo` (
@@ -79,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `veiculo` (
   `nropoltronas` int(11) DEFAULT NULL,
   `numero` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ideveiculo`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela viajava.veiculo: ~3 rows (aproximadamente)
 INSERT INTO `veiculo` (`ideveiculo`, `desplaca`, `nommotorista`, `desmodelo`, `nroanomodelo`, `nropoltronas`, `numero`) VALUES
@@ -110,7 +141,7 @@ CREATE PROCEDURE `cadastrarpassagem`(
 	IN `pidecidadedestino` BIGINT,
 	IN `pideveiculo` VARCHAR(20),
 	IN `pnropoltrona` INT,
-	IN `pdtcsaida` DATE,
+	IN `pdtcsaida` VARCHAR(10),
 	IN `pdeshorasaida` VARCHAR(10),
 	IN `pnrovalorpassagem` DECIMAL(10, 2)
 )
@@ -120,9 +151,6 @@ BEGIN
 	SELECT ideveiculo INTO videveiculo
 	FROM veiculo
 	WHERE desplaca = pideveiculo;
-	
-	SET @pdtcsaida = STR_TO_DATE('15/11/2023', '%d/%m/%Y');
-	SELECT @pdtcsaida;
 	
  	INSERT INTO passagem (idecidadeorigem, 
  							  idecidadedestino, 
@@ -134,7 +162,7 @@ BEGIN
 							  									 pidecidadedestino, 
 																 videveiculo, 
 																 pnropoltrona, 
-																 @pdtcsaida, 
+																 STR_TO_DATE(pdtcsaida, '%d/%m/%Y'), 
 																 pdeshorasaida, 
 																 pnrovalorpassagem);
 END//
@@ -204,12 +232,22 @@ DELIMITER ;
 -- Copiando estrutura para procedure viajava.consultarpassagem
 DELIMITER //
 CREATE PROCEDURE `consultarpassagem`(
-    IN pidepassagem BIGINT
+	IN `pidepassagem` BIGINT
 )
 BEGIN
-    SELECT * 
-	 FROM passagem 
-	 WHERE idepassagem = pidepassagem;
+	SELECT p.idepassagem, 
+			 p.idecidadeorigem, 
+			 p.idecidadedestino, 
+			 p.ideveiculo,
+			 v.desplaca, 
+			 p.nropoltrona, 
+			 p.dtcsaida, 
+			 p.deshorasaida, 
+			 p.nrovalorpassagem
+	FROM passagem p,
+		  veiculo v
+	WHERE v.ideveiculo = p.ideveiculo
+	and p.idepassagem = pidepassagem;
 END//
 DELIMITER ;
 
@@ -222,17 +260,6 @@ BEGIN
     SELECT v.ideveiculo, v.desplaca, v.nommotorista, v.desmodelo, v.nroanomodelo, v.nropoltronas, v.numero
 	 FROM veiculo v
 	 WHERE v.desplaca = pdesplaca;
-END//
-DELIMITER ;
-
--- Copiando estrutura para procedure viajava.excluircidade
-DELIMITER //
-CREATE PROCEDURE `excluircidade`(
-    IN pidecidade BIGINT
-)
-BEGIN
-    DELETE FROM Cidade 
-	 WHERE idecidade = pidecidade;
 END//
 DELIMITER ;
 
@@ -255,6 +282,58 @@ CREATE PROCEDURE `excluirveiculo`(
 BEGIN
     DELETE FROM veiculo
 	 WHERE desplaca = pdesplaca;
+END//
+DELIMITER ;
+
+-- Copiando estrutura para procedure viajava.spdesfaturamento
+DELIMITER //
+CREATE PROCEDURE `spdesfaturamento`(
+	IN `pdtcinicio` VARCHAR(10),
+	IN `pdtcfinal` VARCHAR(10)
+)
+BEGIN
+    SELECT p.idepassagem, 
+		 p.idecidadeorigem, 
+		 c.nomcidade AS cidadeorigem, 
+		 p.idecidadedestino, 
+		 c2.nomcidade AS cidadedestino, 
+		 p.ideveiculo, 
+		 v.desplaca, 
+		 p.nropoltrona, 
+		 p.dtcsaida, 
+		 p.deshorasaida, 
+		 p.nrovalorpassagem 
+	FROM passagem p, 
+		  cidade c,	
+		  cidade c2, 
+		  veiculo v 
+	WHERE c.idecidade = p.idecidadeorigem 
+	AND v.ideveiculo = p.ideveiculo 
+	AND c2.idecidade = p.idecidadedestino
+	AND p.dtcsaida BETWEEN pdtcinicio AND pdtcfinal;
+END//
+DELIMITER ;
+
+-- Copiando estrutura para procedure viajava.spdeslogin
+DELIMITER //
+CREATE PROCEDURE `spdeslogin`(
+    pdeslogin VARCHAR(255),
+    pdessenha VARCHAR(255)
+)
+BEGIN
+    SELECT * FROM usuario WHERE deslogin = pdeslogin AND dessenha = pdessenha;
+END//
+DELIMITER ;
+
+-- Copiando estrutura para procedure viajava.spstspassagem
+DELIMITER //
+CREATE PROCEDURE `spstspassagem`(
+	IN `pdesplaca` VARCHAR(255),
+	IN `pnropoltrona` INT,
+	IN `pdtcsaida` DATE
+)
+BEGIN
+	SELECT COUNT(*) AS nro FROM passagem p, veiculo v WHERE v.ideveiculo = p.ideveiculo AND v.desplaca = pdesplaca AND p.nropoltrona = pnropoltrona AND p.dtcsaida = pdtcsaida;
 END//
 DELIMITER ;
 
